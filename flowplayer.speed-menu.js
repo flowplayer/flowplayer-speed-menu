@@ -1,3 +1,16 @@
+/*!
+
+   Speed menu plugin for Flowplayer HTML5
+
+   Copyright (c) 2017, Flowplayer Drive Oy
+
+   Released under the MIT License:
+   http://www.opensource.org/licenses/mit-license.php
+
+   Requires Flowplayer HTML5 version 7.x or greater
+   $GIT_DESC$
+
+*/
 (function() {
   var extension = function(flowplayer) {
     flowplayer(function(api, root) {
