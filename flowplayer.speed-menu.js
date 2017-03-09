@@ -1,9 +1,11 @@
 (function() {
   var extension = function(flowplayer) {
-    var common = flowplayer.common
-      , bean = flowplayer.bean;
     flowplayer(function(api, root) {
-      var ui = common.find('.fp-ui', root)[0]
+      var support = flowplayer.support;
+      if (!support.video || !support.inlineVideo) return;
+      var common = flowplayer.common
+        , bean = flowplayer.bean
+        , ui = common.find('.fp-ui', root)[0]
         , controlbar = common.find('.fp-controls', ui)[0];
 
       bean.on(root, 'click', '.fp-speed', function() {
@@ -34,11 +36,9 @@
 
       function createMenu(speeds, currentSpeed) {
         controlbar.appendChild(common.createElement('strong', { className: 'fp-speed' }, currentSpeed + 'x'));
-        var menu = common.createElement('div', { className: 'fp-menu fp-speed-menu' }, '<strong>Speed</strong>');
+        var menu = common.createElement('div', { className: 'fp-menu fp-speed-menu', css: { width: '6em' } }, '<strong>Speed</strong>');
         speeds.forEach(function(s) {
-          var a = document.createElement('a');
-          a.setAttribute('data-speed', s);
-          a.innerHTML = s + 'x';
+          var a = common.createElement('a', { 'data-speed': s }, s + 'x');
           menu.appendChild(a);
         });
         ui.appendChild(menu);
