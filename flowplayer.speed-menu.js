@@ -47,11 +47,15 @@
         common.find('.fp-speed', root).forEach(common.removeNode);
       }
 
+      function round(val) {
+        return Math.round(val * 100) / 100;
+      }
+
       function createMenu(speeds, currentSpeed) {
         controlbar.appendChild(common.createElement('strong', { className: 'fp-speed' }, currentSpeed + 'x'));
         var menu = common.createElement('div', { className: 'fp-menu fp-speed-menu', css: { width: '6em' } }, '<strong>Speed</strong>');
         speeds.forEach(function(s) {
-          var a = common.createElement('a', { 'data-speed': s }, s + 'x');
+          var a = common.createElement('a', { 'data-speed': round(s) }, round(s) + 'x');
           menu.appendChild(a);
         });
         ui.appendChild(menu);
