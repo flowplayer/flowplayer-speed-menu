@@ -19,7 +19,8 @@
       var common = flowplayer.common
         , bean = flowplayer.bean
         , ui = common.find('.fp-ui', root)[0]
-        , controlbar = common.find('.fp-controls', ui)[0];
+        , controlbar = common.find('.fp-controls', ui)[0]
+        , speeds;
 
       bean.on(root, 'click', '.fp-speed', function() {
         var menu = common.find('.fp-speed-menu', root)[0];
@@ -33,13 +34,16 @@
       });
 
       api.on('speed', function(ev, _a, rate) {
-        selectSpeed(rate);
-      });
-
-      api.on('ready', function() {
+        if (speeds.length > 1) {
+          selectSpeed(rate);
+        }
+      })
+      .on('ready', function(ev, api) {
         removeMenu();
-        createMenu(api.speeds || api.conf.speeds, 1);
-        selectSpeed(1);
+        speeds = api.conf.speeds;
+        if (speeds.length > 1) {
+          createMenu();
+        }
       });
 
       function removeMenu() {
@@ -51,14 +55,15 @@
         return Math.round(val * 100) / 100;
       }
 
-      function createMenu(speeds, currentSpeed) {
-        controlbar.appendChild(common.createElement('strong', { className: 'fp-speed' }, currentSpeed + 'x'));
+      function createMenu() {
+        controlbar.appendChild(common.createElement('strong', { className: 'fp-speed' }, api.currentSpeed + 'x'));
         var menu = common.createElement('div', { className: 'fp-menu fp-speed-menu', css: { width: '6em' } }, '<strong>Speed</strong>');
         speeds.forEach(function(s) {
           var a = common.createElement('a', { 'data-speed': round(s) }, round(s) + 'x');
           menu.appendChild(a);
         });
         ui.appendChild(menu);
+        selectSpeed(api.currentSpeed);
       }
 
       function selectSpeed(rate) {
