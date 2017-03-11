@@ -20,7 +20,7 @@
         , bean = flowplayer.bean
         , ui = common.find('.fp-ui', root)[0]
         , controlbar = common.find('.fp-controls', ui)[0]
-        , speeds;
+        , speeds = api.conf.speeds;
 
       bean.on(root, 'click', '.fp-speed', function() {
         var menu = common.find('.fp-speed-menu', root)[0];
