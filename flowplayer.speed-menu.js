@@ -33,7 +33,7 @@
         api.speed(s);
       });
 
-      api.on('speed', function(ev, _a, rate) {
+      api.on('speed', function(_ev, _a, rate) {
         if (speeds.length > 1) {
           selectSpeed(rate);
         }
