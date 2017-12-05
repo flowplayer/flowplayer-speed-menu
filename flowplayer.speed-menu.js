@@ -20,6 +20,7 @@
         , bean = flowplayer.bean
         , ui = common.find('.fp-ui', root)[0]
         , controlbar = common.find('.fp-controls', ui)[0]
+        , pausedSpeed = 1
         , speeds = api.conf.speeds;
 
       bean.on(root, 'click', '.fp-speed', function() {
@@ -38,11 +39,19 @@
           selectSpeed(rate);
         }
       })
-      .on('ready', function(ev, api) {
+      .on('ready', function(_ev, api) {
         removeMenu();
         speeds = api.conf.speeds;
         if (speeds.length > 1) {
           createMenu();
+        }
+      })
+      .on('beforeresume', function (_ev, api) {
+        pausedSpeed = api.currentSpeed;
+      })
+      .on('resume', function (_ev, api) {
+        if (api.currentSpeed !== pausedSpeed) {
+          api.speed(pausedSpeed);
         }
       });
 
